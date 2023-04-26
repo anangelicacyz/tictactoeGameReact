@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function Cuadro ({value, onSquareClick}){
+function Square ({value, onSquareClick}){
     return (
         <div style={(value=== 'X')? {color: '#5ecbff'}:{color: '#7ade59'}} onClick={onSquareClick}>{value}</div>
     )
@@ -9,11 +9,10 @@ function Cuadro ({value, onSquareClick}){
 function TictactoeGame () {
     const [turno, setSigTurno] = useState(true)
     const [array, setArray] = useState((Array(9).fill(null)))
-    //copia del array 
     const [nextSquares, setNextSquares] = useState(array.slice())
 
     function handleClick (i){
-        //verificar si hay esta llena la casilla o si alguien ganó
+        //verificar si esta llena la casilla o si alguien ganó
         if(array[i] || calcularGanador(array)){
             return
         }
@@ -25,8 +24,7 @@ function TictactoeGame () {
         }
         //setear array para que sea igual a next squares
         setArray(nextSquares)
-//cambiar turno, si era true, al aplicarle el set !true= false, entonces cambia
-//a false y de nuevo se aplica el set !false= true, esto sucede despues del click
+        //cambiar turno
         setSigTurno(!turno)
     }
     const ganador = calcularGanador(array)
@@ -36,11 +34,13 @@ function TictactoeGame () {
     }else{
         status= (turno ? 'Turno X': 'Turno O')
     }
+
     function resetGame(Array, ArrayAux){
         setArray(array.map(element => element = null))
         setNextSquares(nextSquares.map(square => square = null))
         setSigTurno(true)
     }
+    
     return (
         <div className="gameInterface">
             <section className="players">
@@ -52,22 +52,13 @@ function TictactoeGame () {
                     <p>Player 2</p>
                     <p><img src='../../icons8-círculo-100.png' /></p>
                  </div>
-                
             </section>
             <section className="boardGame"> 
               {array.map((item,index)=>{
-                return <Cuadro key={index} value={item} onSquareClick={() => handleClick(index)}/>
+                return <Square key={index} value={item} onSquareClick={() => handleClick(index)}/>
 
               })}
-              <Cuadro value={array[0]} onSquareClick={() => handleClick(0)}/>
-              <Cuadro value={array[1]} onSquareClick={() => handleClick(1)}/>
-              <Cuadro value={array[2]} onSquareClick={() => handleClick(2)}/>
-              <Cuadro value={array[3]} onSquareClick={() => handleClick(3)}/>
-              <Cuadro value={array[4]} onSquareClick={() => handleClick(4)}/>
-              <Cuadro value={array[5]} onSquareClick={() => handleClick(5)}/>
-              <Cuadro value={array[6]} onSquareClick={() => handleClick(6)}/>
-              <Cuadro value={array[7]} onSquareClick={() => handleClick(7)}/>
-              <Cuadro value={array[8]} onSquareClick={() => handleClick(8)}/>
+
             </section>
             <section>
                 <div>{status}</div>
