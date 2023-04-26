@@ -114,4 +114,7 @@ h1{
   border-radius: 7px;
   background-color: #FF8400;
 }
+img{
+  max-width: 50%;
 
+}
